@@ -27,4 +27,16 @@ class DevicesController extends Controller
 
         return response()->json($devices);
     }
+
+    public function destroy(Device $device, $id) {
+        $device = $device->whereDeviceId($id)->first();
+
+        if(!$device) {
+            $deleted = false;
+        } else {
+            $deleted = $device->delete();
+        }
+
+        return response()->json(['delete' => $deleted]);
+    }
 }

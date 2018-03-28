@@ -28,14 +28,16 @@ const app = new Vue({
     return {
       devices: [],
       device: -1,
-      selectedDevice: -1,
+      selectedDevice: '',
       deviceAssignerActive: false,
+      refresh: false,
     };
   },
 
   methods: {
     setDevices(devices) {
       this.devices = devices;
+      this.refresh = false
     },
 
     deviceSelected(deviceId) {
@@ -43,11 +45,11 @@ const app = new Vue({
     },
 
     toggleDeviceAssigner() {
-      this.deviceAssignerActive = !this.deviceAssignerActive;
+      this.deviceAssignerActive = true;
     },
 
     refreshList() {
-
+      this.refresh = true;
     }
   }
 });

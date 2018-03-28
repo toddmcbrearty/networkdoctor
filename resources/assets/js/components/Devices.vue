@@ -28,7 +28,7 @@
             this.$emit('devices-updated', this.items);
           })
           .catch(e => {
-            console.log(e.getMessage());
+            console.log(e.error);
           });
       },
     }

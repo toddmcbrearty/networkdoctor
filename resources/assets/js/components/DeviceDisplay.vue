@@ -1,30 +1,42 @@
 <template>
     <div>
-        <nav class="level">
-            <!-- Left side -->
-            <div class="level-left">
-                <div class="level-item">
-                    <div class="field has-addons">
-                        <p class="control">
-                            <input class="input" type="text" placeholder="Search devices" v-model="searchQuery">
-                        </p>
+        <div class="container">
+
+            <nav class="level">
+                <!-- Left side -->
+                <div class="level-left">
+                    <div class="level-item">
+                        <div class="field has-addons">
+                            <p class="control">
+                                <input class="input" type="text" placeholder="Search devices" v-model="searchQuery">
+                            </p>
+                            <p class="control delete-control">
+                                <button class="delete" @click="searchQuery = ''" :disabled="searchQuery === ''"></button>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="level-item sort-items">
+                        <a href="#" @click="show('all')"
+                           :class="[{'is-active': activeSortItem === 'all'}, 'tag', 'level-item']">All</a>
+
+                        <a href="#" @click="show('out')"
+                           :class="[{'is-active': activeSortItem === 'out'}, 'tag', 'level-item']">Lent Out</a>
+
+                        <a href="#" @click="show('available')"
+                           :class="[{'is-active': activeSortItem === 'available'}, 'tag', 'level-item']">Available</a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Right side -->
-            <div class="level-right sort-items">
-                <a href="#" @click="show('all')"
-                   :class="[{'is-active': activeSortItem === 'all'}, 'tag', 'level-item']">All</a>
-
-                <a href="#" @click="show('out')"
-                   :class="[{'is-active': activeSortItem === 'out'}, 'tag', 'level-item']">Lent Out</a>
-
-                <a href="#" @click="show('available')"
-                   :class="[{'is-active': activeSortItem === 'available'}, 'tag', 'level-item']">Available</a>
-            </div>
-        </nav>
-        <div class="container">
+                <!-- Right side -->
+                <div class="level-right sort-items ">
+                    <a class="button is-link is-size-6 level-item" @click="$emit('assigner-show', true)">
+                        <account-convert fill-color="#fff" class="level-item"></account-convert>
+                        <div class="level-item">Assign Device</div>
+                    </a>
+                    <a class="button is-link level-item" v-show="false">Add New Device</a>
+                </div>
+            </nav>
             <grid :data="devices"
                   :columns="['name', 'device_id', 'lendee_name']"
                   :filter-key="searchQuery"
@@ -36,13 +48,15 @@
 <script>
   import Magnify from 'vue-material-design-icons/magnify';
   import Grid from './Grid';
+  import AccountConvert from 'vue-material-design-icons/account-convert';
 
   export default {
     name: 'device-display',
 
     components: {
       Magnify,
-      Grid
+      Grid,
+      AccountConvert
     },
 
     props: {
@@ -50,7 +64,7 @@
         type: Array
       },
       selected: {
-        type: Number
+        type: String
       }
     },
     watch: {
@@ -58,7 +72,7 @@
         this.allDevices = devices;
       },
       selected: function (selected) {
-        this.currentDevice = this.allDevices[--selected];
+        this.searchQuery = selected;
       }
     },
 
@@ -110,5 +124,20 @@
         text-decoration: none;
         font-weight: 700;
         background: $yellow;
+    }
+
+    .level {
+        padding: 1rem 1.2rem;
+        background: $grey;
+    }
+
+    button {
+        font-weight: bold;
+    }
+
+    .delete-control {
+        margin-top: 0.5em;
+        margin-left: -1.5em;
+        z-index: 10;
     }
 </style>

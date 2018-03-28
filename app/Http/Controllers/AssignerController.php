@@ -88,4 +88,18 @@ class AssignerController extends Controller
 
         return response()->json(['saved' => $saved, 'message' => $message]);
     }
+
+    public function destroy($deviceId)
+    {
+        $device = $this->device->whereDeviceId($deviceId)->first();
+
+        if(!$device) {
+            return response()->json(['unassigned' => false, 'message' => 'Device not found.']);
+        }
+
+        $device->lendee_id = null;
+        $device->save();
+
+        return response()->json(['unassigned' => true]);
+    }
 }

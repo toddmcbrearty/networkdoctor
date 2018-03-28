@@ -107,7 +107,7 @@
       LandeeNames,
     },
 
-    props: ['is-active'],
+    props: ['is-active', 'filter-device'],
     watch: {
       isActive(isActive) {
         this.activeState = isActive;

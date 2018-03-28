@@ -2,7 +2,7 @@
     <div>
         <nav class="columns">
             <div class="column has-text-centered" v-for="device in deviceList" :key="device.id">
-                <a href="#" class="selectable-device" @click="selectDevice(device.id)">
+                <a href="#" class="selectable-device" @click="selectDevice(device.name)">
                     <div class="box item">
                         <p class="heading is-size-4" v-text="device.name"></p>
                         <p class="title" v-text="deviceCount(device)"></p>

@@ -6,17 +6,13 @@
             <ticker :devices="devices" @device-selected="deviceSelected"></ticker>
         </div>
 
-        <div class="is-divider" data-content=""></div>
+        <div class="is-divider" data-content="click above to sort"></div>
 
-        <div class="section">
-            <a class="button is-success" @click="toggleDeviceAssigner">Assign Device</a>
-            <a class="button is-info">Add New Device</a>
-            <div class="box">
-                <device-display :devices="devices" :selected="selectedDevice"></device-display>
-            </div>
+        <div class="container">
+            <device-display :devices="devices" :selected="selectedDevice" @assigner-show="toggleDeviceAssigner"></device-display>
         </div>
 
-        <devices @devices-updated="setDevices"></devices>
+        <devices @devices-updated="setDevices" :refresh="refresh"></devices>
         <device-assigner :is-active="deviceAssignerActive" @data-update="refreshList"></device-assigner>
     </section>
 @endsection
