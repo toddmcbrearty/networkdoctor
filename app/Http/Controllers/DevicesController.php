@@ -9,8 +9,15 @@ use Illuminate\Http\Request;
 class DevicesController extends Controller
 {
     public function ticker() {
-        $selectFuncs = DB::raw('min(id) AS id, COUNT(id) AS total, sum(IF(IFNULL(lendee_id, FALSE), 1, 0)) AS on_loan');
-
+//        $selectFuncs = DB::raw('ANY_VALUE(id) AS id, COUNT(id) AS total, sum(IF(IFNULL(lendee_id, FALSE), 1, 0)) AS on_loan');
+        $selectFuncs = DB::raw('MIN(id) as id, COUNT(id) AS total, 
+        sum(
+            CASE 
+                WHEN lendee_id is not null THEN 1
+                WHEN lendee_id is null THEN 0
+            END 
+        
+        ) AS on_loan');
         $ticker = Device::select($selectFuncs, 'name')->groupBy('name')->get();
 
         return response()->json($ticker);
