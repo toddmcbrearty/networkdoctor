@@ -15,6 +15,11 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
+$app->configureMonologUsing(function($monolog) {
+    $monolog->pushHandler(new \Monolog\Handler\StreamHandler('php://stderr', \Monolog\Logger::WARNING));
+    return $monolog;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
