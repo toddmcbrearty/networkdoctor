@@ -10,7 +10,7 @@ class DevicesController extends Controller
 {
     public function ticker() {
 //        $selectFuncs = DB::raw('ANY_VALUE(id) AS id, COUNT(id) AS total, sum(IF(IFNULL(lendee_id, FALSE), 1, 0)) AS on_loan');
-        $selectFuncs = DB::raw('VALUES(id), COUNT(id) AS total, 
+        $selectFuncs = DB::raw('CAST(id as INTEGER), COUNT(id) AS total, 
         sum(
             CASE 
                 WHEN lendee_id is not null THEN 1
