@@ -10,7 +10,7 @@ class DevicesController extends Controller
 {
     public function ticker() {
         $selectFuncs = DB::raw('min(id) AS id, COUNT(id) AS total, sum(IF(IFNULL(lendee_id, FALSE), 1, 0)) AS on_loan');
-       
+
         $ticker = Device::select($selectFuncs, 'name')->groupBy('name')->get();
 
         return response()->json($ticker);
